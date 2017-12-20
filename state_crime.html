@@ -1,0 +1,601 @@
+<html>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="./datamaps.usa.min.js"></script>
+<div id="container" style="position: relative; width: 1000px; height: 800px;"></div>
+<style>	
+	.title {
+		margin-top: -100px;
+		font-family: 'Arial'
+	}
+</style>
+<script>
+    var crime = new Datamap({
+		element: document.getElementById('container'),
+		scope: 'usa',
+		geographyConfig: {
+			highlightBorderColor: 'red',
+			popupTemplate: function(geography, data) {
+				return '<div class="hoverinfo">'+ geography.properties.name + 
+				'<br>Violent Crimes: ' + data.violentCrimes.toLocaleString() + 
+				'<br>Rape: ' + data.rape.toLocaleString() + 
+				'<br>Robbery: ' + data.robbery.toLocaleString() + 
+				'<br>Aggravated Assault: ' + data.assault.toLocaleString() + 
+				'<br>Property Crime: ' + data.propertyCrime.toLocaleString() + 
+				'<br>Burglary: ' + data.burglary.toLocaleString() + 
+				'<br>Larceny Theft: ' + data.larcenyTheft.toLocaleString() + 
+				'<br>Motor Vehicle Theft: ' + data.motorVehicleTheft.toLocaleString() + ' '
+			},
+			highlightBorderWidth: 2,
+			highlightBorderOpacity: 1
+		},
+		  fills: {
+		  'Red': '#CC4731',
+		  'Blue': '#306596',
+		  'Heavy Blue': '#667FAF',
+		  'Light Blue': '#A9C0DE',
+		  'Heavy Red': '#CA5E5B',
+		  'Light Red': '#EAA9A8',
+		  'Yelow': '#FFFF00',
+		  'Orange': 'orange',
+		  defaultFill: '#EDDC4E'
+		},
+
+		data:{
+		  "AZ": {
+		      "fillKey": "Red",
+		      "violentCrimes": 26916,
+		      "rape": 3378,
+		      "robbery": 6249,
+		      "assault": 16970,
+		      "propertyCrime": 215240,
+		      "burglary": 43562,
+		      "larcenyTheft": 154091,
+		      "motorVehicleTheft": 17587
+		  },
+		  "CO": {
+		      "fillKey": "Light Blue",
+		      "violentCrimes": 16554,
+		      "rape": 3039,
+		      "robbery": 3039,
+		      "assault": 10325,
+		      "propertyCrime": 135510,
+		      "burglary": 23472,
+		      "larcenyTheft": 99464,
+		      "motorVehicleTheft": 12574
+		  },
+		  "DE": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 4576,
+		      "rape": 386,
+		      "robbery": 1269,
+		      "assault":  2867,
+		      "propertyCrime":  27900,
+		      "burglary":  5768,
+		      "larcenyTheft":  20865,
+		      "motorVehicleTheft": 1267 
+		  },
+		  "FL": {
+		      "fillKey": "Yellow",
+		      "violentCrimes": 107521,
+		      "rape": 8563,
+		      "robbery":  24914,
+		      "assault":  72895,
+		      "propertyCrime":  679446,
+		      "burglary":  143220,
+		      "larcenyTheft":  493647,
+		      "motorVehicleTheft": 42579  
+		  },
+		  "GA": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 38097,
+		      "rape": 3048,
+		      "robbery":  12417,
+		      "assault":  22052,
+		      "propertyCrime": 331316,
+		      "burglary":  76428,
+		      "larcenyTheft":  228034,
+		      "motorVehicleTheft":  26854 
+		  },
+		  "HI": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 3680,
+		      "rape": 445,
+		      "robbery": 1107,
+		      "assault": 2102,
+		      "propertyCrime": 43297,
+		      "burglary": 7778,
+		      "larcenyTheft": 31640,
+		      "motorVehicleTheft":3879 
+		  },
+		  "ID": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 3468,
+		      "rape": 609,
+		      "robbery": 2042,
+		      "assault": 2623,
+		      "propertyCrime": 30316,
+		      "burglary": 6428,
+		      "larcenyTheft": 22227,
+		      "motorVehicleTheft": 1661
+		  },
+		  "IL": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 47663,
+		      "rape": 4159,
+		      "robbery": 15299,
+		      "assault": 27520,
+		      "propertyCrime": 267385,
+		      "burglary": 50008,
+		      "larcenyTheft": 199926,
+		      "motorVehicleTheft": 17451
+		  },
+		  "IN": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 24099,
+		      "rape": 2186,
+		      "robbery": 6897,
+		      "assault": 14686,
+		      "propertyCrime": 174776,
+		      "burglary": 36893,
+		      "larcenyTheft": 124022,
+		      "motorVehicleTheft": 13861
+		  },
+		  "IA": {
+		      "fillKey": "Light Blue",
+		      "violentCrimes": 8497,
+		      "rape": 1128,
+		      "robbery": 1045,
+		      "assault": 6264,
+		      "propertyCrime": 65056,
+		      "burglary": 14428,
+		      "larcenyTheft": 46477,
+		      "motorVehicleTheft": 4151
+		  },
+		  "KS": {
+		      "fillKey": "Red",
+		      "violentCrimes": 10123,
+		      "rape": 1411,
+		      "robbery": 1362,
+		      "assault": 7259,
+		      "propertyCrime": 79431,
+		      "burglary": 15828,
+		      "larcenyTheft": 56697,
+		      "motorVehicleTheft": 6906
+		  },
+		  "KY": {
+		      "fillKey": "Red",
+		      "violentCrimes": 9340,
+		      "rape": 1763,
+		      "robbery": 3336,
+		      "assault": 4404,
+		      "propertyCrime": 99166,
+		      "burglary": 23244,
+		      "larcenyTheft": 69604,
+		      "motorVehicleTheft": 6318
+		  },
+		  "LA": {
+		      "fillKey": "Red",
+		      "violentCrimes": 23934,
+		      "rape": 1375,
+		      "robbery": 5695,
+		      "assault": 16387,
+		      "propertyCrime": 160824,
+		      "burglary": 38337,
+		      "larcenyTheft": 112596,
+		      "motorVehicleTheft": 9891
+		  },
+		  "MD": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 26661,
+		      "rape": 1619,
+		      "robbery": 9544,
+		      "assault": 15133,
+		      "propertyCrime": 149859,
+		      "burglary": 28012,
+		      "larcenyTheft": 108745,
+		      "motorVehicleTheft": 13102
+		  },
+		  "ME": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 1700,
+		      "rape": 485,
+		      "robbery": 304,
+		      "assault": 890,
+		      "propertyCrime": 26421,
+		      "burglary": 5030,
+		      "larcenyTheft": 20592,
+		      "motorVehicleTheft": 799
+		  },
+		  "MA": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 26399,
+		      "rape": 2180,
+		      "robbery": 6036,
+		      "assault": 18051,
+		      "propertyCrime": 125267,
+		      "burglary": 24964,
+		      "larcenyTheft": 92043,
+		      "motorVehicleTheft": 8260
+		  },
+		  "MN": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 12505,
+		      "rape": 2001,
+		      "robbery": 3687,
+		      "assault": 6729,
+		      "propertyCrime": 125377,
+		      "burglary": 20733,
+		      "larcenyTheft": 96237,
+		      "motorVehicleTheft": 8367
+		  },
+		  "MI": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 42348,
+		      "rape": 6273,
+		      "robbery": 8021,
+		      "assault": 27519,
+		      "propertyCrime": 202547,
+		      "burglary": 44184,
+		      "larcenyTheft": 137206,
+		      "motorVehicleTheft": 21157
+		  },
+		  "MS": {
+		      "fillKey": "Red",
+		      "violentCrimes": 8338,
+		      "rape": 2180,
+		      "robbery": 6036,
+		      "assault": 18051,
+		      "propertyCrime": 125267,
+		      "burglary": 24964,
+		      "larcenyTheft": 92043,
+		      "motorVehicleTheft": 8260
+		  },
+		  "MO": {
+		      "fillKey": "Heavy Blue",
+		      "violentCrimes": 26856,
+		      "rape": 2379,
+		      "robbery": 5592,
+		      "assault": 18482,
+		      "propertyCrime": 176237,
+		      "burglary": 35258,
+		      "larcenyTheft": 124622,
+		      "motorVehicleTheft": 16357
+		  },
+		  "MT": {
+		      "fillKey": "Heavy Red",
+		      "violentCrimes": 3313,
+		      "rape": 541,
+		      "robbery": 203,
+		      "assault": 2532,
+		      "propertyCrime": 25312,
+		      "burglary": 3595,
+		      "larcenyTheft": 19674,
+		      "motorVehicleTheft": 2043
+		  },
+		  "NC": {
+		      "fillKey": "Light Red",
+		      "violentCrimes": 32767,
+		      "rape": 2420,
+		      "robbery": 8416,
+		      "assault": 21421,
+		      "propertyCrime": 285697,
+		      "burglary": 79373,
+		      "larcenyTheft": 192694,
+		      "motorVehicleTheft": 13630
+		  },
+		  "NE": {
+		      "fillKey": "Yellow",
+		      "violentCrimes": 42158,
+		      "rape": 4512,
+		      "robbery": 10635,
+		      "assault": 26725,
+		      "propertyCrime": 279285,
+		      "burglary": 52968,
+		      "larcenyTheft": 208214,
+		      "motorVehicleTheft": 18103
+		  },
+		  "NV": {
+		      "fillKey": "Heavy Blue",
+		      "violentCrimes": 18045,
+		      "rape": 1357,
+		      "robbery": 5954,
+		      "assault": 10564,
+		      "propertyCrime": 74538,
+		      "burglary": 21927,
+		      "larcenyTheft": 42426,
+		      "motorVehicleTheft": 10185
+		  },
+		  "NH": {
+		      "fillKey": "Light Blue",
+		      "violentCrimes": 2602,
+		      "rape": 594,
+		      "robbery": 537,
+		      "assault": 1459,
+		      "propertyCrime": 26041,
+		      "burglary": 4162,
+		      "larcenyTheft": 21022,
+		      "motorVehicleTheft": 857
+		  },
+		  "NJ": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 23346,
+		      "rape": 1274,
+		      "robbery": 10498,
+		      "assault": 11225,
+		      "propertyCrime": 154993,
+		      "burglary": 31710,
+		      "larcenyTheft": 111578,
+		      "motorVehicleTheft": 11705
+		  },
+		  "NY": {
+		      "fillKey": "Yellow",
+		      "violentCrimes": 75398,
+		      "rape": 5433,
+		      "robbery": 24045,
+		      "assault":  45303,
+		      "propertyCrime":  339282 ,
+		      "burglary":  50781 ,
+		      "larcenyTheft":  272765 ,
+		      "motorVehicleTheft":  15736 
+		  },
+		  "ND": {
+		      "fillKey": "Red",
+		      "violentCrimes": 1960,
+		      "rape": 358,
+		      "robbery": 173,
+		      "assault": 1407,
+		      "propertyCrime": 15605,
+		      "burglary": 2707,
+		      "larcenyTheft": 11384,
+		      "motorVehicleTheft": 1514
+		  },
+		  "NM": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 12459,
+		      "rape": 1475,
+		      "robbery": 2086,
+		      "assault": 8797,
+		      "propertyCrime": 73877,
+		      "burglary": 18505,
+		      "larcenyTheft": 49082,
+		      "motorVehicleTheft": 6290
+		  },
+		  "OH": {
+		      "fillKey": "Yellow",
+		      "violentCrimes": 33030,
+		      "rape": 5042,
+		      "robbery": 12753,
+		      "assault": 14771,
+		      "propertyCrime": 324528,
+		      "burglary": 78845,
+		      "larcenyTheft": 227668,
+		      "motorVehicleTheft": 18015
+		  },
+		  "OK": {
+		      "fillKey": "Red",
+		      "violentCrimes": 15744,
+		      "rape": 1777,
+		      "robbery": 3048,
+		      "assault": 10744,
+		      "propertyCrime": 115982,
+		      "burglary": 29508,
+		      "larcenyTheft": 75891,
+		      "motorVehicleTheft": 10583
+		  },
+		  "OR": {
+		      "fillKey": "Yellow",
+		      "violentCrimes": 9224,
+		      "rape": 1458,
+		      "robbery": 2093,
+		      "assault": 5592,
+		      "propertyCrime": 114305,
+		      "burglary": 17230,
+		      "larcenyTheft": 87526,
+		      "motorVehicleTheft": 9549
+		  },
+		  "PA": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 40164,
+		      "rape": 3827,
+		      "robbery": 13534,
+		      "assault": 22189,
+		      "propertyCrime": 247016,
+		      "burglary": 45720,
+		      "larcenyTheft": 188256,
+		      "motorVehicleTheft": 13040
+		  },
+		  "RI": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 2313,
+		      "rape": 361,
+		      "robbery": 529,
+		      "assault": 1398,
+		      "propertyCrime":22935 ,
+		      "burglary": 4823,
+		      "larcenyTheft": 16279,
+		      "motorVehicleTheft": 1833
+		  },
+		  "SC": {
+		      "fillKey": "Red",
+		      "violentCrimes": 24052,
+		      "rape": 2068,
+		      "robbery": 3997,
+		      "assault": 17676,
+		      "propertyCrime": 167217,
+		      "burglary": 36721,
+		      "larcenyTheft": 117594,
+		      "motorVehicleTheft": 12902
+		  },
+		  "SD": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 2786,
+		      "rape": 470,
+		      "robbery": 200,
+		      "assault": 2096,
+		      "propertyCrime": 15902,
+		      "burglary": 2818,
+		      "larcenyTheft": 12077,
+		      "motorVehicleTheft": 1007
+		  },
+		  "TN": {
+		      "fillKey": "Red",
+		      "violentCrimes": 39848,
+		      "rape": 2531,
+		      "robbery": 7265,
+		      "assault": 29681,
+		      "propertyCrime": 200447,
+		      "burglary": 46642,
+		      "larcenyTheft": 141206,
+		      "motorVehicleTheft": 12599
+		  },
+		  "TX": {
+		      "fillKey": "Orange",
+		      "violentCrimes": 109414,
+		      "rape": 11393,
+		      "robbery": 31181,
+		      "assault": 65656,
+		      "propertyCrime": 813934,
+		      "burglary": 169234,
+		      "larcenyTheft": 576154,
+		      "motorVehicleTheft": 68546
+		  },
+		  "UT": {
+		      "fillKey": "Red",
+		      "violentCrimes": 6346,
+		      "rape": 1454,
+		      "robbery": 1312,
+		      "assault": 3513,
+		      "propertyCrime": 84711,
+		      "burglary": 11518,
+		      "larcenyTheft": 65895,
+		      "motorVehicleTheft": 7298
+		  },
+		  "WI": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 16714,
+		      "rape": 1674,
+		      "robbery": 5066,
+		      "assault": 9809,
+		      "propertyCrime": 120238,
+		      "burglary": 21216,
+		      "larcenyTheft": 89103,
+		      "motorVehicleTheft": 9919
+		  },
+		  "VA": {
+		      "fillKey": "Light Blue",
+		      "violentCrimes": 16340,
+		      "rape": 2310,
+		      "robbery": 4292,
+		      "assault": 9400,
+		      "propertyCrime": 160720,
+		      "burglary": 23122,
+		      "larcenyTheft": 129933,
+		      "motorVehicleTheft": 7665
+		  },
+		  "VT": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 622,
+		      "rape": 110,
+		      "robbery": 70,
+		      "assault": 432,
+		      "propertyCrime": 9551,
+		      "burglary": 2034,
+		      "larcenyTheft": 7273,
+		      "motorVehicleTheft":244 
+		  },
+		  "WA": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 20136,
+		      "rape": 2695,
+		      "robbery": 5640,
+		      "assault": 11627,
+		      "propertyCrime": 261706,
+		      "burglary": 55290,
+		      "larcenyTheft": 175769,
+		      "motorVehicleTheft": 30647
+		  },
+		  "WV": {
+		      "fillKey": "Red",
+		      "violentCrimes": 5588,
+		      "rape": 505,
+		      "robbery": 651,
+		      "assault": 4358,
+		      "propertyCrime": 37648,
+		      "burglary": 8973,
+		      "larcenyTheft": 26779,
+		      "motorVehicleTheft": 1896
+		  },
+		  "WY": {
+		      "fillKey": "Heavy Blue",
+		      "violentCrimes": 1142,
+		      "rape": 174,
+		      "robbery": 53,
+		      "assault": 899,
+		      "propertyCrime": 11477,
+		      "burglary": 1689,
+		      "larcenyTheft": 9185,
+		      "motorVehicleTheft":603 
+		  },
+		  "CA": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 153709,
+		      "rape": 11527,
+		      "robbery": 48680,
+		      "assault": 91803,
+		      "propertyCrime": 947192,
+		      "burglary": 202670,
+		      "larcenyTheft": 592670,
+		      "motorVehicleTheft": 151852
+		  },
+		  "CT": {
+		      "fillKey": "Blue",
+		      "violentCrimes": 8522,
+		      "rape": 782,
+		      "robbery": 3159,
+		      "assault": 4495,
+		      "propertyCrime": 69070,
+		      "burglary": 11966,
+		      "larcenyTheft": 51005,
+		      "motorVehicleTheft": 6110
+		  },
+		  "AK": {
+		      "fillKey": "Red",
+		      "violentCrimes": 14243,
+		      "rape": 771,
+		      "robbery": 3336,
+		      "assault": 4404,
+		      "propertyCrime": 99166,
+		      "burglary": 23244,
+		      "larcenyTheft": 69604,
+		      "motorVehicleTheft": 6318
+		  },
+		  "AR": {
+		      "fillKey": "Light Red",
+		      "violentCrimes": 26916,
+		      "rape": 1763,
+		      "robbery": 2050,
+		      "assault": 10265,
+		      "propertyCrime": 99018,
+		      "burglary": 24790,
+		      "larcenyTheft": 68627,
+		      "motorVehicleTheft": 5601
+		  },
+		  "AL": {
+		      "fillKey": "Red",
+		      "violentCrimes": 4684,
+		      "rape": 2005,
+		      "robbery": 4701,
+		      "assault": 13745,
+		      "propertyCrime": 154094,
+		      "burglary": 39715,
+		      "larcenyTheft": 104238,
+		      "motorVehicleTheft": 10141
+		  }
+		}
+	});
+	crime.labels();
+
+</script>
+<h1 align="center" class="title">FBI State Crime Statistics for 2014</h1>
+</html>
